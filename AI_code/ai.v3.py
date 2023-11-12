@@ -22,12 +22,13 @@ import pandas as pd
 from google.cloud import speech
 from google.cloud import texttospeech
 from datetime import datetime
+import pygame
 
 # 마지막으로 확인한 시간을 기록하는 전역 변수
 last_checked_time = time.time()
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 """---
@@ -97,7 +98,7 @@ def job():
                 #시작
                 start = time.time()
                 # 모델 - GPT 3.5 Turbo 선택
-                model = "gpt-4"
+                model = "gpt-3.5-turbo-1106"
                 # 질문 작성하기
                 #query = "다음 문서를 요약해줘: " + Message_text
                 query =f"""
@@ -213,6 +214,17 @@ def job():
                 # 마지막으로 확인한 시간을 업데이트합니다.
                 print("시간 :", last_checked_time)
                 last_checked_time = time.time()
+
+                # Initialize pygame
+                pygame.init()
+                # Load the MP3 file
+                pygame.mixer.music.load("C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                # Play the music
+                pygame.mixer.music.play()
+
+                # Wait for the music to play completely
+                while pygame.mixer.music.get_busy():
+                    time.sleep(1)
 
 # 매 분마다 job 함수를 실행합니다.
 schedule.every(5).seconds.do(job)
