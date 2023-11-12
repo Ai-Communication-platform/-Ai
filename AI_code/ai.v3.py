@@ -28,7 +28,7 @@ import pygame
 last_checked_time = time.time()
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 """---
@@ -98,7 +98,7 @@ def job():
                 #시작
                 start = time.time()
                 # 모델 - GPT 3.5 Turbo 선택
-                model = "gpt-4-1106-preview"
+                model = "gpt-3.5-turbo-16k"
                 print("model: ", model)
                 # 질문 작성하기
                 #query = "다음 문서를 요약해줘: " + Message_text
