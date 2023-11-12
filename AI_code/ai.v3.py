@@ -46,14 +46,16 @@ def job():
     for file_name in os.listdir(path):
         file_path = os.path.join(path, file_name)
         # 파일 생성 시간이 마지막으로 확인한 시간보다 이후인 경우
+        print(os.path.getctime(file_path) > last_checked_time)
         if os.path.getctime(file_path) > last_checked_time:
+            print("들어옴")
             print(f'New file detected: {file_name}')
             # 여기에 새 파일이 발견될 때 실행할 코드를 추가합니다.
             # Google Cloud 클라이언트 초기화
             client = speech.SpeechClient.from_service_account_json(credentials_path)
 
             # 오디오 파일을 읽어옵니다.
-            audio_file_path = file_name
+            audio_file_path = os.path.join(path, file_name)
             with open(audio_file_path, 'rb') as audio_file:
                 content = audio_file.read()
 
@@ -193,7 +195,7 @@ def job():
                 with open(output_filename, "wb") as out:
                     out.write(response.audio_content)
                     print(f"Audio content written to '{output_filename}'")
-                    
+            
             # 현재 시간을 얻습니다.
             current_time = datetime.now()
             # "년월일시분" 형식으로 포맷팅합니다.
@@ -213,6 +215,7 @@ def job():
             STT(1.35) + GPT(10.23) + TTS( 0.56) ≈ 12(sec)
             """
     # 마지막으로 확인한 시간을 업데이트합니다.
+    print("시간 :", last_checked_time)
     last_checked_time = time.time()
 
 # 매 분마다 job 함수를 실행합니다.
