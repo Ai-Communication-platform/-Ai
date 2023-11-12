@@ -28,7 +28,7 @@ import pygame
 last_checked_time = time.time()
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 """---
@@ -49,12 +49,12 @@ def job():
             file_path = os.path.join(path, file_name)
             file_creation_time = os.path.getctime(file_path)
 
-            print(f"File Creation Time: {file_creation_time}, Last Checked Time: {last_checked_time}")  # 시간 비교 출력
+            # print(f"File Creation Time: {file_creation_time}, Last Checked Time: {last_checked_time}")  # 시간 비교 출력
 
             # 파일 생성 시간이 마지막으로 확인한 시간보다 이후인 경우
             if file_creation_time > last_checked_time:
                 print("들어옴")
-                print(f'New file detected: {file_name}')
+                # print(f'New file detected: {file_name}')
                 # 여기에 새 파일이 발견될 때 실행할 코드를 추가합니다.
                 # Google Cloud 클라이언트 초기화
                 client = speech.SpeechClient.from_service_account_json(credentials_path)
@@ -102,16 +102,16 @@ def job():
                 # 질문 작성하기
                 #query = "다음 문서를 요약해줘: " + Message_text
                 query =f"""
-                Importance of sincerity: Rather than the content of comfort, the heart conveying the content, or ‘sincerity,’ is more important. Sincere consolation is effectively conveyed to the other person.
+                진심의 중요성: 위로의 내용보다는 그 내용을 전달하는 마음, 즉 '진심'이 더 중요하다. 진심이 담긴 위로는 상대방에게 효과적으로 전달된다.
 
-                Three principles of comfort:
+                위로의 세 가지 원칙:
 
-                Validation: Reading and acknowledging the other person’s feelings. Example: “I must have been heartbroken.”
-                Normalizing: Letting the other person know that their emotional response is natural in that situation. Example: “It’s natural to feel angry in that situation.”
-                Affirmation: Recognizing the true value of the other person. Example: “You are precious.”
-                Importance of Healing: The reason people want to be comforted is because when their hearts are warm, people move and move in the direction of healing.
+                명료화 (Validation): 상대방의 감정을 읽어주고 인정해주는 것. 예: "마음이 아팠겠다."
+                정상화 (Normalizing): 상대방의 감정 반응이 그 상황에서는 당연하다는 것을 알려주는 것. 예: "그런 상황이라면 화가 나는 게 당연해."
+                승인 (Affirmation): 상대방의 진정한 가치를 인정해주는 것. 예: "너는 소중한 존재다."
+                힐링의 중요성: 사람들이 위로를 받고 싶어하는 이유는 마음이 따뜻해지면 사람이 움직이게 되고, 치유하는 방향으로 나아가게 되기 때문이다.
 
-                Please refer to the above article. After that, answer the following passage simply and clearly from the perspective of a friend of the same age. The answer is in Korean.
+                상기 글을 참고하세요. 그 후, 다음 글을 대학친구의 입장이 되어서 간단 명료하게 답하시오.
                 "{Message_text}"
                 """
                 # 메시지 설정하기
@@ -212,7 +212,7 @@ def job():
                 STT(1.35) + GPT(10.23) + TTS( 0.56) ≈ 12(sec)
                 """
                 # 마지막으로 확인한 시간을 업데이트합니다.
-                print("시간 :", last_checked_time)
+                # print("시간 :", last_checked_time)
                 last_checked_time = time.time()
 
                 # Initialize pygame
