@@ -98,21 +98,21 @@ def job():
                 #시작
                 start = time.time()
                 # 모델 - GPT 3.5 Turbo 선택
-                model = "gpt-3.5-turbo-16k"
+                model = "gpt-3.5-turbo-1106"
                 print("model: ", model)
                 # 질문 작성하기
                 #query = "다음 문서를 요약해줘: " + Message_text
                 query =f"""
-                진심의 중요성: 위로의 내용보다는 그 내용을 전달하는 마음, 즉 '진심'이 더 중요하다. 진심이 담긴 위로는 상대방에게 효과적으로 전달된다.
+                Importance of sincerity: Rather than the content of comfort, the heart conveying the content, or ‘sincerity,’ is more important. Sincere consolation is effectively conveyed to the other person.
 
-                위로의 세 가지 원칙:
+                Three principles of comfort:
 
-                명료화 (Validation): 상대방의 감정을 읽어주고 인정해주는 것. 예: "마음이 아팠겠다."
-                정상화 (Normalizing): 상대방의 감정 반응이 그 상황에서는 당연하다는 것을 알려주는 것. 예: "그런 상황이라면 화가 나는 게 당연해."
-                승인 (Affirmation): 상대방의 진정한 가치를 인정해주는 것. 예: "너는 소중한 존재다."
-                힐링의 중요성: 사람들이 위로를 받고 싶어하는 이유는 마음이 따뜻해지면 사람이 움직이게 되고, 치유하는 방향으로 나아가게 되기 때문이다.
+                Validation: Reading and acknowledging the other person’s feelings. Example: “I must have been heartbroken.”
+                Normalizing: Letting the other person know that their emotional response is natural in that situation. Example: “It’s natural to feel angry in that situation.”
+                Affirmation: Recognizing the true value of the other person. Example: “You are precious.”
+                Importance of Healing: The reason people want to be comforted is because when their hearts are warm, people move and move in the direction of healing.
 
-                상기 글을 참고하세요. 그 후, 다음 글을 같은 나이인 친구의 입장이 되었다고 생각해서 간단 명료하게 답하시오. 답변만 출력.
+                Please refer to the above article. After that, answer the following passage simply and clearly, as if you were from the perspective of a friend of the same age. Only answers are output. Printed in Korean.
                 "{Message_text}"
                 """
                 # 메시지 설정하기
