@@ -28,7 +28,7 @@ import pygame
 last_checked_time = time.time()
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 """---
@@ -36,12 +36,12 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 ---
 """
 # Google Cloud 인증 키 파일 경로 (서비스 계정 키)
-credentials_path = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\ai-i-401313-176ecd5ad2cf.json"
+credentials_path = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\ai-i-401313-176ecd5ad2cf.json"
 
 def job():  
     global last_checked_time
     # 모니터링할 경로를 지정합니다.
-    path = "C:\Users\ewqds\Documents\GOMRecorder"
+    path = "C:\\Users\\ewqds\\Documents\\GOMRecorder"
     
     # 현재 시간과 마지막으로 확인한 시간 사이에 생성된 모든 파일을 찾습니다.
     for file_name in os.listdir(path):
@@ -83,7 +83,7 @@ def job():
                 # 출력 결과
                 print("STT 결과")
                 print(Message_text)
-                with open("C:\\Users\\win\\Documents\\GitHub\\-Ai\\example.txt", "w") as file:
+                with open("C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\example.txt", "w") as file:
                     file.write(Message_text)
                 #끝
                 end = time.time()
@@ -112,7 +112,7 @@ def job():
                 Affirmation: Recognizing the true value of the other person. Example: “You are precious.”
                 Importance of Healing: The reason people want to be comforted is because when their hearts are warm, people move and move in the direction of healing.
 
-                Please refer to the above article. After that, answer the following passage simply and clearly, as if you were from the perspective of a friend of the same age. Only answers are output. Printed in Korean.
+                Please refer to the above article. After that, answer the following passage simply and clearly from the perspective of a friend of the same age. Output is in Korean.                
                 "{Message_text}"
                 """
                 # 메시지 설정하기
@@ -162,7 +162,7 @@ def job():
                 #TTS시작
                 start = time.time()
                 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
-                tts_credentials_path = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\ai-i-401313-176ecd5ad2cf.json"
+                tts_credentials_path = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\ai-i-401313-176ecd5ad2cf.json"
                 # TTS 클라이언트 초기화
                 tts_client = texttospeech.TextToSpeechClient.from_service_account_json(tts_credentials_path)
                 def synthesize_text_to_audio(text, output_filename="C:\\Users\\win\\Documents\\GitHub\\-Ai\\tts_output.mp3"):
@@ -192,7 +192,7 @@ def job():
                 # "년월일시분" 형식으로 포맷팅합니다.
                 formatted_time = current_time.strftime("%Y%m%d%H%M%S")
                 # ChatGPT로부터 얻은 답변을 음성으로 변환
-                synthesize_text_to_audio(answer, output_filename = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                synthesize_text_to_audio(answer, output_filename = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
                 #끝
                 end = time.time()
                 print(f"TTS Time: {end-start:.5f}sec")
@@ -212,7 +212,7 @@ def job():
                 # Initialize pygame
                 pygame.init()
                 # Load the MP3 file
-                pygame.mixer.music.load("C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                pygame.mixer.music.load("C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
                 # Play the music
                 pygame.mixer.music.play()
 
