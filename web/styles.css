@@ -1,0 +1,95 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* 스크롤바 제거 */
+}
+
+.app-container {
+  background-color: #f8d7da;
+  border-radius: 10px;
+  font-family: 'Arial', sans-serif;
+  width: 300px;
+  margin: auto; /* 가로 중앙 정렬을 위해 */
+  position: absolute; /* 컨테이너를 페이지의 정 중앙에 위치시키기 위해 */
+  top: 50%; /* 상단에서 50% 위치 */
+  left: 50%; /* 왼쪽에서 50% 위치 */
+  transform: translate(-50%, -50%); /* 정확한 중앙 정렬을 위해 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 선택적 그림자 추가 */
+}
+  
+  .app-footer {
+    padding: 10px;
+    text-align: center;
+  }
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #F08784;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  .app-logo {
+    width: 50px; /* Adjust size as necessary */
+    margin-right: 10px; /* Adds space between logo and title */
+  }
+  .app-title {
+    font-size: 1.5em;
+    color: #000;
+  }
+  .app-time {
+    font-size: 0.8em;
+    color: #888;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+  }
+  .message-container {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    height: 400px; /* 필요에 따라 조정 */
+    overflow-y: auto;
+  }
+  
+  .message {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .message-content {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .message-time {
+    text-align: right;
+    color: #888;
+    font-size: 0.8em;
+  }
+  
+  .app-footer button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .voice-button img, .smile-button img, .send-button img {
+    width: 30px; /* 아이콘 크기를 적절히 조정 */
+  }
+  
+  /* 모바일 화면에서 전체 너비를 사용하도록 수정 */
+  @media (max-width: 600px) {
+    .app-container {
+      width: 95%; /* 좌우 여백을 주기 위해 100% 대신 95%를 사용 */
+      border-radius: 0; /* 모바일 화면에서는 둥근 모서리를 제거 */
+      position: static; /* 모바일 화면에서는 기본 정렬 사용 */
+      transform: none; /* 모바일 화면에서는 변환을 적용하지 않음 */
+    }
+  }
+    
