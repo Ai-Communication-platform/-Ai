@@ -22,3 +22,11 @@ recordButton.addEventListener('click', () => {
       console.error('허가 거부 또는 오류:', error);
     });
 });
+
+function updateTime() {
+  var now = new Date();
+  var hours = now.getHours().toString().padStart(2, '0');
+  var minutes = now.getMinutes().toString().padStart(2, '0');
+  document.getElementById('current-time').textContent = hours + ':' + minutes;
+}
+

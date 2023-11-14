@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>대화형 앱</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대화형 앱</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <div class="app-container">
-    <header class="app-header">
-        <div class="header-content">
-          <img src="image/logo.png" alt="App Logo" class="app-logo">
-          <div class="app-title">아이</div>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-content">
+                <img src="image/logo.png" alt="App Logo" class="app-logo">
+                <div class="app-title">아이</div>
+            </div>
+            <div class="app-time" id="current-time">시간</div>
+        </header>
+        <div class="message-container">
+            <!-- 메시지 내용 -->
+            <div class="message">
+                <div class="message-content">오늘 기분 어때?</div>
+                <div class="message-time">06:30</div>
+            </div>
+            <!-- 다른 메시지들 -->
         </div>
-        <div class="app-time">06:30</div>
-    </header>
-    <div class="message-container">
-      <!-- 메시지 내용 -->
-      <div class="message">
-        <div class="message-content">오늘 기분 어때?</div>
-        <div class="message-time">06:30</div>
-      </div>
-      <!-- 다른 메시지들 -->
+        <footer class="app-footer">
+            <button class="voice-button"><img src="image/microphone-icon.png" alt="Voice"></button>
+            <button class="smile-button"><img src="image/logo.png" alt="Smile"></button>
+            <button class="send-button"><img src="image/send-icon.png" alt="Send"></button>
+        </footer>
     </div>
-    <footer class="app-footer">
-      <button class="voice-button"><img src="image/microphone-icon.png" alt="Voice"></button>
-      <button class="smile-button"><img src="image/logo.png" alt="Smile"></button>
-      <button class="send-button"><img src="image/send-icon.png" alt="Send"></button>
-    </footer>
-  </div>
-<script src="scripts.js"></script>
+    <script src="scripts.js">
+        // 페이지 로드 시 현재 시간으로 설정하고, 매 분마다 업데이트
+        updateTime();
+        setInterval(updateTime, 1000);
+
+    </script>
 </body>
+
 </html>
