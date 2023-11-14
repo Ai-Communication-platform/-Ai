@@ -32,10 +32,15 @@
         </footer>
     </div>
     <script src="scripts.js">
+        function updateTime() {
+            var now = new Date();
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = hours + ':' + minutes;
+        }
         // 페이지 로드 시 현재 시간으로 설정하고, 매 분마다 업데이트
         updateTime();
-        setInterval(updateTime, 1000);
-
+        setInterval(updateTime, 60000);
     </script>
 </body>
 

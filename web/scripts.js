@@ -1,3 +1,5 @@
+
+
 // 자동 스크롤 기능
 const messageContainer = document.getElementById('message-container');
 const scrollButton = document.getElementById('scroll-button');
@@ -23,10 +25,4 @@ recordButton.addEventListener('click', () => {
     });
 });
 
-function updateTime() {
-  var now = new Date();
-  var hours = now.getHours().toString().padStart(2, '0');
-  var minutes = now.getMinutes().toString().padStart(2, '0');
-  document.getElementById('current-time').textContent = hours + ':' + minutes;
-}
 
