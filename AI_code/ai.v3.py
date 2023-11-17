@@ -112,12 +112,8 @@ def job():
                 Affirmation: Recognizing the true value of the other person. Example: “You are precious.”
                 Importance of Healing: The reason people want to be comforted is because when their hearts are warm, people move and move in the direction of healing.
 
-<<<<<<< Updated upstream
-                Please refer to the above article. After that, answer the following passage simply and clearly from the perspective of a friend of the same age. Output is in Korean.                
+                Please refer to the above article. After that, answer the following passage simply and clearly, as if you were from the perspective of a friend of the same age. Only answers are output. Answer in Korean.                
                 "{Message_text}"
-=======
-                Please refer to the above article. After that, answer the following passage simply and clearly, as if you were from the perspective of a friend of the same age. Only answers are output. Answer in Korean.                "{Message_text}"
->>>>>>> Stashed changes
                 """
                 # 메시지 설정하기
                 messages = [
