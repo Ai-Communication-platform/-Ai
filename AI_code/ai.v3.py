@@ -29,7 +29,7 @@ last_checked_time = time.time()
 
 # ChatGPT API Key Load
 <<<<<<< Updated upstream
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 =======
 os.environ["OPENAI_API_KEY"] = "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"
 >>>>>>> Stashed changes
