@@ -3,7 +3,8 @@ const multer = require('multer');
 const cors = require('cors'); // cors 모듈 요구
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
-
+// ffmpeg 실행 파일의 경로를 설정
+ffmpeg.setFfmpegPath('"C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\web\\js\\node_modules\\ffmpeg-6.1-essentials_build\\bin\\ffmpeg.exe"');
 const app = express();
 app.use(cors()); // CORS 미들웨어 적용
 
