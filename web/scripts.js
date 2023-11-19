@@ -8,6 +8,7 @@ scrollButton.addEventListener('click', () => {
 });
 
 const recordButton = document.getElementById('record-button');
+// 클라이언트 측 JavaScript
 let mediaRecorder;
 let audioChunks = [];
 
@@ -31,3 +32,14 @@ recordButton.addEventListener('click', () => {
             });
     }
 });
+
+
+// 녹음 시작
+function startRecording(stream) {
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.start();
+    mediaRecorder.ondataavailable = event => {
+        audioChunks.push(event.data);
+    };
+}
+

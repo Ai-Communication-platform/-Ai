@@ -6,7 +6,7 @@ const fs = require('fs');
 const app = express();
 
 // 정적 파일을 제공하는 폴더 설정
-app.use(express.static('public'));
+app.use(express.static('C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\web'));
 const upload = multer({ dest: 'uploads/' });
 
 app.post('/upload', upload.single('audioFile'), (req, res) => {
@@ -56,5 +56,5 @@ app.post('/upload', upload.single('audioFile'), (req, res) => {
 
 const port = 3000;
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Server running on http://localhost:${port}`);
 });
