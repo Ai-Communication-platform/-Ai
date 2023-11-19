@@ -1,13 +1,14 @@
 const express = require('express');
 const multer = require('multer');
-const ffmpeg = require('fluent-ffmpeg');
+const cors = require('cors'); // cors 모듈 요구
 const fs = require('fs');
+const ffmpeg = require('fluent-ffmpeg');
 
 const app = express();
+app.use(cors()); // CORS 미들웨어 적용
 
-// 정적 파일을 제공하는 폴더 설정
-app.use(express.static('C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\web'));
 const upload = multer({ dest: 'uploads/' });
+
 
 app.post('/upload', upload.single('audioFile'), (req, res) => {
     const filePath = req.file.path;
