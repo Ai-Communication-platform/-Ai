@@ -1,13 +1,14 @@
 
 
-// 자동 스크롤 기능
-const messageContainer = document.getElementById('message-container');
-const scrollButton = document.getElementById('scroll-button');
-scrollButton.addEventListener('click', () => {
-  messageContainer.scrollTop = messageContainer.scrollHeight;
-});
+// // 자동 스크롤 기능
+// const messageContainer = document.getElementById('message-container');
+// const scrollButton = document.getElementById('scroll-button');
+// scrollButton.addEventListener('click', () => {
+//   messageContainer.scrollTop = messageContainer.scrollHeight;
+// });
 
 const recordButton = document.getElementById('record-button');
+
 // 클라이언트 측 JavaScript
 let mediaRecorder;
 let audioChunks = [];
@@ -19,27 +20,33 @@ recordButton.addEventListener('click', () => {
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then(stream => {
                 mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.start();
-                audioChunks = [];
-
-                mediaRecorder.ondataavailable = function(event) {
+                mediaRecorder.ondataavailable = event => {
                     audioChunks.push(event.data);
                 };
+                mediaRecorder.onstop = async () => {
+                    // 녹음된 오디오 데이터를 Blob으로 변환
+                    const audioBlob = new Blob(audioChunks, { 'type' : 'audio/ogg; codecs=opus' });
+                    const formData = new FormData();
+                    formData.append('audioFile', audioBlob);
 
-                mediaRecorder.onstop = function() {
-                    // 여기서 audioChunks를 MP3로 변환하고 저장하는 로직을 추가합니다.
+                    // 서버로 데이터 전송
+                    try {
+                        const response = await fetch('http://localhost:3000/upload', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        if (!response.ok) {
+                            throw new Error(`Server responded with ${response.status}`);
+                        }
+                        const result = await response.json();
+                        console.log(result.message);
+                    } catch (error) {
+                        console.error('Upload error:', error);
+                    }
                 };
-            });
+                mediaRecorder.start();
+                audioChunks = [];
+            })
+            .catch(e => console.error('getUserMedia() error:', e));
     }
 });
-
-
-// 녹음 시작
-function startRecording(stream) {
-    mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.start();
-    mediaRecorder.ondataavailable = event => {
-        audioChunks.push(event.data);
-    };
-}
-
