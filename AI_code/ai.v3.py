@@ -28,7 +28,7 @@ import pygame
 last_checked_time = time.time()
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 """---
@@ -41,7 +41,7 @@ credentials_path = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\ai-i-401313-176ecd5a
 def job():  
     global last_checked_time
     # 모니터링할 경로를 지정합니다.
-    path = "C:\\Users\\win\\Documents\\GOMRecorder"
+    path = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\web\\js\\uploads"
     
     # 현재 시간과 마지막으로 확인한 시간 사이에 생성된 모든 파일을 찾습니다.
     for file_name in os.listdir(path):
