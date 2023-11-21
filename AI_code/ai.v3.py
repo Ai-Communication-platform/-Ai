@@ -12,82 +12,55 @@ Original file is located at
 import schedule
 import time
 import os
-import time
-
-import os
 import openai
 import json
 import unicodedata
 import pandas as pd
 from google.cloud import speech
 from google.cloud import texttospeech
-from datetime import datetime
+from datetime import datetime, timedelta
 import pygame
 import firebase_admin
 from firebase_admin import credentials, initialize_app, storage
+import requests
+
+# 서비스 계정 키(JSON 파일)의 경로
+cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-firebase-adminsdk-pgie0-832a8c2eb2.json")
 
 
-# Firebase 서비스 계정 키 파일 경로
-cred = credentials.RefreshToken('google-services.json')
-
-# Firebase 앱 초기화
+# Firebase Admin SDK 초기화
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'gs://ai-firebase-f501e.appspot.com/files'
+    'storageBucket': "gs://ai-firebase-f501e.appspot.com/files"
 })
 
-def download_latest_mp3_to_folder(bucket, folder_path):
-    latest_file_info = get_latest_mp3_info(bucket)
 
-    if latest_file_info:
-        # 파일명 추출 (경로에서 마지막 부분)
-        file_name = os.path.basename(latest_file_info['name'])
-
-        # 로컬 경로 생성
-        local_file_path = os.path.join(folder_path, file_name)
-
-        # 파일 다운로드
-        blob = bucket.blob(latest_file_info['name'])
-        blob.download_to_filename(local_file_path)
-        print(f'{latest_file_info["name"]} has been downloaded to {local_file_path}.')
-    else:
-        print('No mp3 files found in the bucket.')
-
-
-def get_latest_mp3_info(bucket):
-    # 버킷 내 모든 파일 목록
-    blobs = bucket.list_blobs()
-
-    # 가장 최근의 파일 정보를 저장할 변수
-    latest_file = None
-
-    for blob in blobs:
-        if blob.name.endswith('.mp3'):
-            # 최초의 파일이거나 더 최신 파일일 경우 업데이트
-            if latest_file is None or blob.time_created > latest_file['created']:
-                latest_file = {
-                    'name': blob.name,
-                    'created': blob.time_created
-                }
-
-    return latest_file
-
-def get_latest_file(files_metadata):
-    # 파일이 없는 경우
-    if not files_metadata:
-        return None
-
-    # 가장 최근에 생성된 파일 찾기
-    latest_file = max(files_metadata, key=lambda x: x['created'])
-    return latest_file
-
-
-# 사용 예시
+# Storage 버킷 접근
 bucket = storage.bucket()
-download_latest_mp3_to_folder(bucket, 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\back-end\\uploads')
 
+# Storage 내의 MP3 파일 목록 가져오기
+blobs = bucket.list_blobs()
+mp3_files = [blob for blob in blobs if blob.name.endswith('.mp3')]
 
+# 파일의 생성 날짜를 기준으로 최신 파일 찾기
+latest_file = max(mp3_files, key=lambda x: x.time_created)
+
+# 파일 다운로드 URL 가져오기
+download_url = latest_file.generate_signed_url(timedelta(seconds=300), method='GET')
+
+# 로컬에 저장할 디렉토리 지정 (예: '/your/local/directory/')
+local_directory = 'C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\web\\js\\uploads'
+if not os.path.exists(local_directory):
+    os.makedirs(local_directory)
+
+# 파일의 원래 이름을 유지하여 로컬 디렉토리에 저장
+local_file_path = os.path.join(local_directory, latest_file.name)
+response = requests.get(download_url)
+with open(local_file_path, 'wb') as file:
+    file.write(response.content)
 # 마지막으로 확인한 시간을 기록하는 전역 변수
 last_checked_time = time.time()
+
+
 
 # ChatGPT API Key Load
 os.environ["OPENAI_API_KEY"] = "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"
