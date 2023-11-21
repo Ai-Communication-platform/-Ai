@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "255213789336",
+    "project_id": "ai-firebase-f501e",
+    "storage_bucket": "ai-firebase-f501e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255213789336:android:2e990d6753a515b9cfb0ed",
+        "android_client_info": {
+          "package_name": "com.example.ai_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtQ_-qO3vNcdtqbFQ7lw2zSQJiApqAd54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
