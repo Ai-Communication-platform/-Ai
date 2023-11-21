@@ -36,7 +36,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 ---
 """
 # Google Cloud 인증 키 파일 경로 (서비스 계정 키)
-credentials_path = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\ai-i-401313-176ecd5ad2cf.json"
+credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 def job():  
     global last_checked_time
@@ -162,7 +162,7 @@ def job():
                 #TTS시작
                 start = time.time()
                 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
-                tts_credentials_path = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\ai-i-401313-176ecd5ad2cf.json"
+                tts_credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
                 # TTS 클라이언트 초기화
                 tts_client = texttospeech.TextToSpeechClient.from_service_account_json(tts_credentials_path)
                 def synthesize_text_to_audio(text, output_filename="C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\tts_output.mp3"):
