@@ -30,7 +30,7 @@ cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-fir
 
 # Firebase Admin SDK 초기화
 firebase_admin.initialize_app(cred, {
-    'storageBucket': "gs://ai-firebase-f501e.appspot.com/files"
+    'storageBucket': "ai-firebase-f501e.appspot.com"
 })
 
 
@@ -48,7 +48,7 @@ latest_file = max(mp3_files, key=lambda x: x.time_created)
 download_url = latest_file.generate_signed_url(timedelta(seconds=300), method='GET')
 
 # 로컬에 저장할 디렉토리 지정 (예: '/your/local/directory/')
-local_directory = 'C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\web\\js\\uploads'
+local_directory = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\web\\js\\uploads'
 if not os.path.exists(local_directory):
     os.makedirs(local_directory)
 
@@ -76,7 +76,7 @@ credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 def job():  
     global last_checked_time
     # 모니터링할 경로를 지정합니다.
-    path = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\web\\js\\uploads"
+    path = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\web\\js\\uploads"
     
     # 현재 시간과 마지막으로 확인한 시간 사이에 생성된 모든 파일을 찾습니다.
     for file_name in os.listdir(path):
@@ -118,7 +118,7 @@ def job():
                 # 출력 결과
                 print("STT 결과")
                 print(Message_text)
-                with open("C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\example.txt", "w") as file:
+                with open("C:\\Users\\win\\Documents\\GitHub\\-Ai\\example.txt", "w") as file:
                     file.write(Message_text)
                 #끝
                 end = time.time()
@@ -249,7 +249,7 @@ def job():
                 # Initialize pygame
                 pygame.init()
                 # Load the MP3 file
-                pygame.mixer.music.load("C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                pygame.mixer.music.load("C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
                 # Play the music
                 pygame.mixer.music.play()
 
