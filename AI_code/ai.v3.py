@@ -32,7 +32,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\web\\js\\uploads'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -117,13 +117,22 @@ def job():
                 # 음성 인식 요청 생성
                 config = speech.RecognitionConfig(
                     encoding=speech.RecognitionConfig.AudioEncoding.MP3,
-                    sample_rate_hertz=16000,  # 오디오 샘플 속도에 따라 조정
+                    # sample_rate_hertz=16000,  # 오디오 샘플 속도에 따라 조정
                     language_code='ko-KR'  # 인식할 언어 코드 지정
                 )
                 # 음성 인식 요청 보내기
-                response = client.recognize(config=config, audio=audio)
+                try:
+                    response = client.recognize(config=config, audio=audio)
+                except Exception as e:
+                    print(f"Error occurred: {e}")
+                if hasattr(response, 'results') and response.results:
+                    transcript_text = response.results[0].alternatives[0].transcript
+                else:
+                    transcript_text = "No transcribable text found or error in response"
+
+                # Optionally, print more detailed error information here
                 # Get the transcript from the response
-                transcript_text = response.results[0].alternatives[0].transcript if response.results else "stt안됨"
+                # transcript_text = response.results[0].alternatives[ 0].transcript if response.results else "stt안됨"///
                 # 유니코드 문자열을 한국어 문자열로 변환
                 Message_text = unicodedata.normalize("NFC", transcript_text)
                 # 줄 바꿈 추가
