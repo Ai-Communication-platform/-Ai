@@ -26,7 +26,19 @@ import requests
 
 # 서비스 계정 키(JSON 파일)의 경로
 cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-firebase-adminsdk-pgie0-832a8c2eb2.json")
+# 로컬에 저장할 디렉토리 지정 (예: '/your/local/directory/')
+path = 'C:\\Users\\win\\Documents\\-Ai\\web\\js\\uploads'
+# Google Cloud 인증 키 파일 경로 (서비스 계정 키)
+credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-92d1dd2e0014.json"
 
+# ChatGPT API Key Load
+os.environ["OPENAI_API_KEY"] = "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"
+openai.api_key = os.environ["OPENAI_API_KEY"]
+
+# Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
+tts_credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-92d1dd2e0014.json"
+# 마지막으로 확인한 시간을 기록하는 전역 변수
+last_checked_time = time.time()
 
 # Firebase Admin SDK 초기화
 firebase_admin.initialize_app(cred, {
@@ -34,50 +46,42 @@ firebase_admin.initialize_app(cred, {
 })
 
 
-# Storage 버킷 접근
-bucket = storage.bucket()
-
-# Storage 내의 MP3 파일 목록 가져오기
-blobs = bucket.list_blobs()
-mp3_files = [blob for blob in blobs if blob.name.endswith('.mp3')]
-
-# 파일의 생성 날짜를 기준으로 최신 파일 찾기
-latest_file = max(mp3_files, key=lambda x: x.time_created)
-
-# 파일 다운로드 URL 가져오기
-download_url = latest_file.generate_signed_url(timedelta(seconds=300), method='GET')
-
-# 로컬에 저장할 디렉토리 지정 (예: '/your/local/directory/')
-local_directory = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\web\\js\\uploads'
-if not os.path.exists(local_directory):
-    os.makedirs(local_directory)
-
-# 파일의 원래 이름을 유지하여 로컬 디렉토리에 저장
-local_file_path = os.path.join(local_directory, latest_file.name)
-response = requests.get(download_url)
-with open(local_file_path, 'wb') as file:
-    file.write(response.content)
-# 마지막으로 확인한 시간을 기록하는 전역 변수
-last_checked_time = time.time()
-
-
-
-# ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
-openai.api_key = os.environ["OPENAI_API_KEY"]
-
 """---
 # 02. 사운드 입력 후 텍스트로 변환 (STT)
 ---
 """
-# Google Cloud 인증 키 파일 경로 (서비스 계정 키)
-credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 def job():  
     global last_checked_time
-    # 모니터링할 경로를 지정합니다.
-    path = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\web\\js\\uploads"
-    
+    global path
+
+    start = time.time()
+    # Storage 버킷 접근
+    bucket = storage.bucket()
+
+    # Storage 내의 MP3 파일 목록 가져오기
+    blobs = bucket.list_blobs()
+    mp3_files = [blob for blob in blobs if blob.name.endswith('.mp3')]
+
+    # 파일의 생성 날짜를 기준으로 최신 파일 찾기
+    latest_file = max(mp3_files, key=lambda x: x.time_created)
+
+    # 파일 다운로드 URL 가져오기
+    download_url = latest_file.generate_signed_url(timedelta(seconds=300), method='GET')
+
+
+    if not os.path.exists(path):
+        os.makedirs(path)
+        
+    # 파일의 원래 이름을 유지하여 로컬 디렉토리에 저장
+    local_file_path = os.path.join(path, latest_file.name.replace('/',''))
+    response = requests.get(download_url)
+    with open(local_file_path, 'wb') as file:
+        file.write(response.content)
+        time.sleep(0.5)
+    end = time.time()
+    print(f"Storage Time: {end-start:.5f}sec")
+
     # 현재 시간과 마지막으로 확인한 시간 사이에 생성된 모든 파일을 찾습니다.
     for file_name in os.listdir(path):
         if file_name.endswith('.mp3'):
@@ -103,7 +107,7 @@ def job():
                 audio = speech.RecognitionAudio(content=content)
                 # 음성 인식 요청 생성
                 config = speech.RecognitionConfig(
-                    encoding=speech.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
+                    encoding=speech.RecognitionConfig.AudioEncoding.MP3,
                     sample_rate_hertz=16000,  # 오디오 샘플 속도에 따라 조정
                     language_code='ko-KR'  # 인식할 언어 코드 지정
                 )
@@ -118,7 +122,7 @@ def job():
                 # 출력 결과
                 print("STT 결과")
                 print(Message_text)
-                with open("C:\\Users\\win\\Documents\\GitHub\\-Ai\\example.txt", "w") as file:
+                with open("C:\\Users\\win\\Documents\\-Ai\\example.txt", "w") as file:
                     file.write(Message_text)
                 #끝
                 end = time.time()
@@ -196,8 +200,7 @@ def job():
 
                 #TTS시작
                 start = time.time()
-                # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
-                tts_credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
+
                 # TTS 클라이언트 초기화
                 tts_client = texttospeech.TextToSpeechClient.from_service_account_json(tts_credentials_path)
                 def synthesize_text_to_audio(text, output_filename="C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\tts_output.mp3"):
@@ -227,7 +230,7 @@ def job():
                 # "년월일시분" 형식으로 포맷팅합니다.
                 formatted_time = current_time.strftime("%Y%m%d%H%M%S")
                 # ChatGPT로부터 얻은 답변을 음성으로 변환
-                synthesize_text_to_audio(answer, output_filename = "C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                synthesize_text_to_audio(answer, output_filename = "C:\\Users\\win\\Documents\\-Ai\\output_audio\\" + formatted_time + ".mp3")
                 #끝
 
 
@@ -249,7 +252,7 @@ def job():
                 # Initialize pygame
                 pygame.init()
                 # Load the MP3 file
-                pygame.mixer.music.load("C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                pygame.mixer.music.load("C:\\Users\\win\\Documents\\-Ai\\output_audio\\" + formatted_time + ".mp3")
                 # Play the music
                 pygame.mixer.music.play()
 
