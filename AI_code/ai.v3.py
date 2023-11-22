@@ -32,7 +32,7 @@ path = 'C:\\Users\\win\\Documents\\-Ai\\web\\js\\uploads'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-92d1dd2e0014.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -97,6 +97,15 @@ def job():
                 # 여기에 새 파일이 발견될 때 실행할 코드를 추가합니다.
                 # Google Cloud 클라이언트 초기화
                 client = speech.SpeechClient.from_service_account_json(credentials_path)
+    
+                # print(file_path)
+                # # Initialize pygame
+                # pygame.init()
+                # # Load the MP3 file
+                # pygame.mixer.music.load(rf"{file_path}")
+                # # Play the music
+                # pygame.mixer.music.play()
+
 
                 # stt시자
                 # 오디오 파일을 읽어옵니다.
@@ -114,7 +123,7 @@ def job():
                 # 음성 인식 요청 보내기
                 response = client.recognize(config=config, audio=audio)
                 # Get the transcript from the response
-                transcript_text = response.results[0].alternatives[0].transcript if response.results else ""
+                transcript_text = response.results[0].alternatives[0].transcript if response.results else "stt안됨"
                 # 유니코드 문자열을 한국어 문자열로 변환
                 Message_text = unicodedata.normalize("NFC", transcript_text)
                 # 줄 바꿈 추가
@@ -200,7 +209,7 @@ def job():
 
                 #TTS시작
                 start = time.time()
-
+    
                 # TTS 클라이언트 초기화
                 tts_client = texttospeech.TextToSpeechClient.from_service_account_json(tts_credentials_path)
                 def synthesize_text_to_audio(text, output_filename="C:\\Users\\ewqds\\Documents\\GitHub\\-Ai\\tts_output.mp3"):
