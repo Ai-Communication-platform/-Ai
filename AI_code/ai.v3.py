@@ -29,14 +29,14 @@ cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-fir
 # 로컬에 저장할 디렉토리 지정 (예: '/your/local/directory/')
 path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\web\\js\\uploads'
 # Google Cloud 인증 키 파일 경로 (서비스 계정 키)
-credentials_path = "C:\\Users\\win\\Documents\\GitHub\\ai-i-401313-92d1dd2e0014.json"
+credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
 os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
-tts_credentials_path = "C:\\Users\\win\\Documents\\GitHub\\ai-i-401313-92d1dd2e0014.json"
+tts_credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 # 마지막으로 확인한 시간을 기록하는 전역 변수
 last_checked_time = time.time()
 
@@ -93,7 +93,7 @@ def job():
             # 파일 생성 시간이 마지막으로 확인한 시간보다 이후인 경우
             if file_creation_time > last_checked_time:
                 print("들어옴")
-                # print(f'New file detected: {file_name}')
+                print(f'New file detected: {file_name}')
                 # 여기에 새 파일이 발견될 때 실행할 코드를 추가합니다.
                 # Google Cloud 클라이언트 초기화
                 client = speech.SpeechClient.from_service_account_json(credentials_path)
