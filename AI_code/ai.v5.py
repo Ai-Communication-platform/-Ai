@@ -26,24 +26,24 @@ import requests
 from moviepy.editor import AudioFileClip
 
 # 서비스 계정 키(JSON 파일)의 경로
-cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-firebase-adminsdk-pgie0-832a8c2eb2.json")
+cred = credentials.Certificate("서비스 계정 키")
 # 로컬에 저장할 디렉토리 지정 (예: '/your/local/directory/')
-path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\web\\js\\uploads'
+path = '디렉토리 지정'
 # Google Cloud 인증 키 파일 경로 (서비스 계정 키)
-credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-92d1dd2e0014.json"
+credentials_path = "서비스 계정 키"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "chatGPT API 키"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
-tts_credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-92d1dd2e0014.json"
+tts_credentials_path = "Google Cloud TTS 인증 키"
 # 마지막으로 확인한 시간을 기록하는 전역 변수
 last_checked_time = time.time()
 
 # Firebase Admin SDK 초기화
 firebase_admin.initialize_app(cred, {
-    'storageBucket': "ai-firebase-f501e.appspot.com"
+    'storageBucket': "STORAGE_BUCKET"
 })
 
 
