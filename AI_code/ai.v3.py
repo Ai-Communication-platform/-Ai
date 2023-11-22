@@ -261,7 +261,7 @@ def job():
                 # Initialize pygame
                 pygame.init()
                 # Load the MP3 file
-                pygame.mixer.music.load("C:\\Users\\win\\Documents\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                pygame.mixer.music.load("C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
                 # Play the music
                 pygame.mixer.music.play()
 
