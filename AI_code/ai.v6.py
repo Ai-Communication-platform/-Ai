@@ -24,7 +24,6 @@ import firebase_admin
 from firebase_admin import credentials, initialize_app, storage
 import requests
 from moviepy.editor import AudioFileClip
-from google.cloud import storage as googlestorage
 
 # 서비스 계정 키(JSON 파일)의 경로
 cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-firebase-adminsdk-pgie0-832a8c2eb2.json")
@@ -34,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -45,8 +44,9 @@ last_checked_time = time.time()
 # Firebase Admin SDK 초기화
 bucket_name = 'ai-firebase-f501e.appspot.com'
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'ai-firebase-f501e.appspot.com'
+    'storageBucket': 'ai-firebase-f501e.appspot.com/files'
 })
+
 
 
 """---
@@ -54,22 +54,6 @@ firebase_admin.initialize_app(cred, {
 ---
 """
 
-def upload_to_firebase(bucket_name, source_file_name, destination_blob_name):
-    """Firebase Storage에 파일을 업로드하는 함수"""
-
-    # 클라이언트 초기화
-    storage_client = googlestorage.Client.from_service_account_json(credentials_path)
-
-    # 버킷 객체 가져오기
-    bucket = storage_client.bucket(bucket_name)
-
-    # 버킷에 업로드할 Blob 객체 생성
-    blob = bucket.blob(destination_blob_name)
-
-    # 파일 업로드
-    blob.upload_from_filename(source_file_name)
-
-    print(f"File {source_file_name} uploaded to {destination_blob_name}.")
 
 
 
@@ -121,8 +105,9 @@ def job():
                 client = speech.SpeechClient.from_service_account_json(credentials_path)
     
                 # Convert the AAC-encoded file to MP3 format using moviepy
-                audio_clip = AudioFileClip(local_file_path)
-                audio_clip.write_audiofile(local_file_path, codec='mp3')
+                
+                audio_clip = AudioFileClip(file_path)
+                audio_clip.write_audiofile(file_path, codec='mp3')
 
                 # print(file_path)
                 # # Initialize pygame
@@ -135,8 +120,7 @@ def job():
 
                 # stt시자
                 # 오디오 파일을 읽어옵니다.
-                audio_file_path = os.path.join(path, file_name)
-                with open(local_file_path, 'rb') as audio_file:
+                with open(file_path, 'rb') as audio_file:
                     content = audio_file.read()
 
                 start = time.time()
@@ -264,9 +248,12 @@ def job():
                 # 현재 시간
                 current_time = datetime.now()
                 # "년월일시분" 형식으로 포맷팅합니다.
-                formatted_time = current_time.strftime("%Y%m%d%H%M%S")
+                formatted_time = current_time.strftime("%Y-%m-%d-%H-%M-%S")
+
                 # ChatGPT로부터 얻은 답변을 음성으로 변환
                 output_filename = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3"
+                
+                # ACC 포매팅에서 저장
                 synthesize_text_to_audio(answer, output_filename = output_filename)
                 #끝
 
@@ -282,15 +269,14 @@ def job():
                 - gpt-4
                 STT(1.35) + GPT(10.23) + TTS( 0.56) ≈ 12(sec)
                 """
-                # 마지막으로 확인한 시간을 업데이트합니다.
-                # print("시간 :", last_checked_time)
-                last_checked_time = time.time()
 
                 # 사용 예
-                source_file_name = output_filename
                 destination_blob_name = 'output/' + formatted_time + ".mp3"
 
-                upload_to_firebase(bucket_name, output_filename, destination_blob_name)
+                upload_blob = bucket.blob(destination_blob_name)
+                with open(output_filename, 'rb') as file:
+                    upload_blob.upload_from_file(file)
+
 
                 # Initialize pygame
                 pygame.init()
@@ -302,7 +288,10 @@ def job():
                 # Wait for the music to play completely
                 while pygame.mixer.music.get_busy():
                     time.sleep(1)
-
+                # 마지막으로 확인한 시간을 업데이트합니다.
+                # print("시간 :", last_checked_time)
+                last_checked_time = time.time()
+                
 # 매 분마다 job 함수를 실행합니다.
 schedule.every(5).seconds.do(job)
 
