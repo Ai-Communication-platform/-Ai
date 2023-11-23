@@ -24,7 +24,7 @@ import firebase_admin
 from firebase_admin import credentials, initialize_app, storage
 import requests
 from moviepy.editor import AudioFileClip
-from google.cloud import storage
+from google.cloud import storage as googlestorage
 
 # 서비스 계정 키(JSON 파일)의 경로
 cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-firebase-adminsdk-pgie0-832a8c2eb2.json")
@@ -58,7 +58,7 @@ def upload_to_firebase(bucket_name, source_file_name, destination_blob_name):
     """Firebase Storage에 파일을 업로드하는 함수"""
 
     # 클라이언트 초기화
-    storage_client = storage.Client.from_service_account_json(credentials_path)
+    storage_client = googlestorage.Client.from_service_account_json(credentials_path)
 
     # 버킷 객체 가져오기
     bucket = storage_client.bucket(bucket_name)
