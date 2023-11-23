@@ -33,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -44,7 +44,7 @@ last_checked_time = time.time()
 # Firebase Admin SDK 초기화
 bucket_name = 'ai-firebase-f501e.appspot.com'
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'ai-firebase-f501e.appspot.com/files'
+    'storageBucket': 'ai-firebase-f501e.appspot.com'
 })
 
 
@@ -66,7 +66,7 @@ def job():
     bucket = storage.bucket()
 
     # Storage 내의 MP3 파일 목록 가져오기
-    blobs = bucket.list_blobs()
+    blobs = bucket.list_blobs(prefix="files/")
     mp3_files = [blob for blob in blobs if blob.name.endswith('.mp3')]
 
     # 파일의 생성 날짜를 기준으로 최신 파일 찾기
