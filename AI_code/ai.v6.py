@@ -33,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -98,7 +98,7 @@ def job():
 
             # 파일 생성 시간이 마지막으로 확인한 시간보다 이후인 경우
             if file_creation_time > last_checked_time:
-                print("들어옴")
+                print("사용자 입력 들어옴")
                 print(f'New file detected: {file_name}')
                 # 여기에 새 파일이 발견될 때 실행할 코드를 추가합니다.
                 # Google Cloud 클라이언트 초기화
