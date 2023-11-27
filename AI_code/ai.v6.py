@@ -33,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -68,8 +68,11 @@ def job():
     # Storage 내의 MP3 파일 목록 가져오기
     blobs = bucket.list_blobs(prefix="files/")
     mp3_files = [blob for blob in blobs if blob.name.endswith('.mp3')]
-
+    print(mp3_files)
     # 파일의 생성 날짜를 기준으로 최신 파일 찾기
+    if len(mp3_files) == 0:
+        return
+
     latest_file = max(mp3_files, key=lambda x: x.time_created)
 
     # 파일 다운로드 URL 가져오기
