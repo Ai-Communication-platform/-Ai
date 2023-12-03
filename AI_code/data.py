@@ -1,10 +1,17 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from matplotlib import font_manager, rc
 
 # Load the Excel file
 file_path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\감성대화말뭉치(최종데이터)_Training.xlsx'  # Replace with your file path
 data = pd.read_excel(file_path)
+
+
+# Setting the font to support Korean characters
+font_path = "C:\\Users\\win\\Downloads\\Nanum_Gothic\\NanumGothic-Bold.ttf"  # Replace with the actual path to the Korean font
+font = font_manager.FontProperties(fname=font_path).get_name()
+rc('font', family=font)
 
 # Prepare data for visualization
 emotion_major_count = data['감정_대분류'].value_counts()
