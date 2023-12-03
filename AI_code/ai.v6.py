@@ -68,7 +68,6 @@ def job():
     # Storage 내의 MP3 파일 목록 가져오기
     blobs = bucket.list_blobs(prefix="files/")
     mp3_files = [blob for blob in blobs if blob.name.endswith('.mp3')]
-    print(mp3_files)
     # 파일의 생성 날짜를 기준으로 최신 파일 찾기
     if len(mp3_files) == 0:
         return
