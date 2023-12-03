@@ -33,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -48,15 +48,6 @@ firebase_admin.initialize_app(cred, {
 })
 
 
-
-"""---
-# 02. 사운드 입력 후 텍스트로 변환 (STT)
----
-"""
-
-
-
-
 def job():  
     global last_checked_time
     global path
@@ -64,7 +55,7 @@ def job():
     start = time.time()
     # Storage 버킷 접근
     bucket = storage.bucket()
-
+    
     # Storage 내의 MP3 파일 목록 가져오기
     blobs = bucket.list_blobs(prefix="files/")
     mp3_files = [blob for blob in blobs if blob.name.endswith('.mp3')]
@@ -273,19 +264,21 @@ def job():
                 """
 
                 # 사용 예
+                start = time.time()
                 destination_blob_name = 'output/' + formatted_time + ".mp3"
 
                 upload_blob = bucket.blob(destination_blob_name)
                 with open(output_filename, 'rb') as file:
                     upload_blob.upload_from_file(file)
-
-
-                # Initialize pygame
-                pygame.init()
-                # Load the MP3 file
-                pygame.mixer.music.load("C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
-                # Play the music
-                pygame.mixer.music.play()
+                end = time.time()
+                print(f"data send Time: {end-start:.5f}sec")
+    
+                # # Initialize pygame
+                # pygame.init()
+                # # Load the MP3 file
+                # pygame.mixer.music.load("C:\\Users\\win\\Documents\\GitHub\\-Ai\\output_audio\\" + formatted_time + ".mp3")
+                # # Play the music
+                # pygame.mixer.music.play()
 
                 # Wait for the music to play completely
                 while pygame.mixer.music.get_busy():
@@ -295,7 +288,10 @@ def job():
                 last_checked_time = time.time()
                 
 # 매 분마다 job 함수를 실행합니다.
+global_start = time.time()
 schedule.every(5).seconds.do(job)
+global_end   = time.time()
+print(f"All Time: {global_end-global_start:.5f}sec")
 
 if __name__ == "__main__":
     while True:
