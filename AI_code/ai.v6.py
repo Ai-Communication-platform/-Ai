@@ -159,8 +159,7 @@ def job():
                 ---
                 """
 
-                #시작
-                start = time.time()
+
                 # 모델 - GPT 3.5 Turbo 선택
                 model = "gpt-3.5-turbo-1106"
                 print("model: ", model)
@@ -168,9 +167,12 @@ def job():
                 # 감정 분석하기
                 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
                 prompt = generation_prompt.format(Document=Message_text)
+                start = time.time()
                 # 감정 분석 chatgpt로 진행
                 Sammary = chatgpt_call(model, prompt)['choices'][0]['message']['content']
-                print(Sammary)
+                end = time.time()
+                print("감정 분석 결과: ", Sammary)
+                print(f"sentiment analysis Time: {end-start:.5f}sec")
 
 
                 # 질문 작성하기
@@ -195,6 +197,8 @@ def job():
                 ]
 
                 # ChatGPT API 호출하기
+                # GPTCompletion 시작
+                start = time.time()
                 response = chatgpt_call(model, messages)
 
                 answer = response['choices'][0]['message']['content']
