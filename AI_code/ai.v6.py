@@ -58,6 +58,8 @@ def chatgpt_call(model, messages):
         messages=messages
     )
 
+    return response
+
 def job():  
     global last_checked_time
     global path
@@ -167,7 +169,7 @@ def job():
                 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
                 prompt = generation_prompt.format(Document=Message_text)
                 # 감정 분석 chatgpt로 진행
-                chatgpt_call(model, prompt)
+                response = chatgpt_call(model, prompt)['choices'][0]['message']['content']
                 
 
 
@@ -193,7 +195,7 @@ def job():
                 ]
 
                 # ChatGPT API 호출하기
-                chatgpt_call(model, messages)
+                response = chatgpt_call(model, messages)
 
                 answer = response['choices'][0]['message']['content']
                 print("ChatGPT: "+ answer.replace('.', '.\n').replace('? ', '?\n').replace('! ', '!\n'))
