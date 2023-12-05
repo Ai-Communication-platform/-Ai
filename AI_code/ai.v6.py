@@ -47,6 +47,9 @@ firebase_admin.initialize_app(cred, {
     'storageBucket': 'ai-firebase-f501e.appspot.com'
 })
 
+# 감정분석을 위한 프롬프트 읽어오기
+generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
+
 
 def job():  
     global last_checked_time
@@ -155,8 +158,8 @@ def job():
 
                 # 감정 분석하기
                 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
-                generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
-                Summary = generation_prompt.format()
+                Summary = generation_prompt.format(Document=Message_text)
+            
 
                 # 질문 작성하기
                 #query = "다음 문서를 요약해줘: " + Message_text
