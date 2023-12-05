@@ -33,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)

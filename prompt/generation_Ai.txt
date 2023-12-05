@@ -1,4 +1,3 @@
-"""
 You will receive a set of documents and appraisal codes. These emotion codes play an important role in the emotion classification system. Your task is to identify the emotion expressed in the document using the emotion code provided. If there is a relevant emotion missing from the set provided, please add it with a unique code. Otherwise, print the existing emotion code identified in the document.
 
 [Emotion Codes]
@@ -108,4 +107,3 @@ Note: ONLY return the relevant or modified emotions at the top level in the hier
 
 
 Please note that while translating, I ensured that the essence and meaning of the prompt remained the same, although some expressions may differ slightly due to the nuances in language. Please make sure to print in Korean.
-"""
