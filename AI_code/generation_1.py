@@ -135,7 +135,7 @@ def main():
     parser.add_argument("--top_p", type=float, default=0.0, help="top-p for generation")
     parser.add_argument("--data", type=str, default="C:\\Users\\ewqds\\Documents\\GitHub\\topicGPT\\data\\input\\sample.jsonl", help="data to run generation on")
     parser.add_argument("--prompt_file", type=str, default="C:\\Users\\ewqds\\Documents\\GitHub\\topicGPT\\prompt\\generation_1.txt", help="file to read prompts from")
-    parser.add_argument("--seed_file", type=str, default="C:\\Users\\ewqds\\Documents\\GitHub\\topicGPT\\templates\\seed_1.md", help="markdown file to read the seed topics from")
+    parser.add_argument("--seed_file", type=str, default="C:\\Users\\win\\Documents\\GitHub\\-Ai\\AI_code\\seed_1.md", help="markdown file to read the seed topics from")
     parser.add_argument("--out_file", type=str, default="C:\\Users\\ewqds\\Documents\\GitHub\\topicGPT\\data\\output\\generation_1.jsonl", help="file to write results to")
     parser.add_argument("--topic_file", type=str, default="C:\\Users\\ewqds\\Documents\\GitHub\\topicGPT\\data\\output\\generation_1.md", help="file to write topics to")
     parser.add_argument("--verbose", type=bool, default=False, help="whether to print out results")

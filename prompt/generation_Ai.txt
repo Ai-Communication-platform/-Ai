@@ -1,0 +1,39 @@
+You will receive a document and a set of emotion codes. These codes are pivotal in an emotion classification hierarchy. Your task is to use the provided emotion codes to identify the emotions expressed in the document. If there are relevant emotions missing from the set, add them with unique codes. Otherwise, output the existing emotion codes as identified in the document.
+
+[Emotion Codes]
+{Codes}
+
+[Examples]
+Example 1: Adding "[1] E00" for anger
+Document: 
+I am very dissatisfied with my job. I feel like I am wasting my time every day and want to look for another job.
+
+Your response: 
+[1] E00 [2] E129: Expresses dissatisfaction and anger about wasting time at work, indicating a desire to find a new job.
+
+Example 2: Using "[1] E00" and "[2] E10" for worry
+Document: 
+I've been so busy with work lately, I'm worried about my health.
+
+Your response: 
+[1] E00 [2] E10: Shows stress due to excessive workload and worry about health.
+
+[Instructions]
+Step 1: Determine the emotions mentioned in the document.
+- Emotion labels must be as GENERALIZABLE as possible and not specific to the document.
+- Emotions should reflect a SINGLE emotion, not a combination.
+- New emotions should have a code, a simple general label, and an emotion description.
+- Emotions should be broad enough to accommodate future sub-emotions.
+Step 2: Perform ONE of the following:
+1. If there are already duplicates or relevant emotions in the hierarchy, output those emotions and stop here.
+2. If no emotion is contained in the document, return "None".
+3. Otherwise, add your emotion as a top-level emotion. Stop here and output the added emotion(s). Do not add any additional levels.
+
+[Document]
+{Document}
+
+Note: ONLY return the relevant or modified emotions at the top level in the hierarchy.
+[Your response]
+"""
+
+Please note that while translating, I ensured that the essence and meaning of the prompt remained the same, although some expressions may differ slightly due to the nuances in language.
