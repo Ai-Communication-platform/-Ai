@@ -38,29 +38,29 @@ def prompt_formatting(generation_prompt, deployment_name, doc, seed_file, topics
     total_len = prompt_len + doc_len + topic_len
 
     # Handle cases where prompt is too long ----
-    if total_len > context_len:           
-        # Truncate document if too long  
-        if doc_len > (context_len - prompt_len - max_top_len):        
+    if total_len > context_len:
+        # Truncate document if too long
+        if doc_len > (context_len - prompt_len - max_top_len):
             if verbose: print(f"Document is too long ({doc_len} tokens). Truncating...")
             doc = truncating(doc, context_len - prompt_len - max_top_len)
             prompt = generation_prompt.format(Document=doc, Topics=topic_str)
 
         # Truncate topic list to only include topics that are most similar to document
         # Determined by cosine similarity between topic string & document embedding
-        else:       
+        else:
             if verbose: print(f"Too many topics ({topic_len} tokens). Pruning...")
             cos_sim = {}    # topic: cosine similarity w/ document
             doc_emb = sbert.encode(doc, convert_to_tensor=True)
-            for top in topics_list: 
+            for top in topics_list:
                 top_emb = sbert.encode(top, convert_to_tensor=True)
                 cos_sim[top] = util.cos_sim(top_emb, doc_emb)
             sim_topics = sorted(cos_sim, key=cos_sim.get, reverse=True)
 
             max_top_len = context_len - prompt_len - doc_len
             seed_len, seed_str = 0, ""
-            while seed_len < max_top_len and len(sim_topics) > 0: 
+            while seed_len < max_top_len and len(sim_topics) > 0:
                 new_seed = sim_topics.pop(0)
-                if seed_len + num_tokens_from_messages(new_seed + '\n', deployment_name) > max_top_len:      
+                if seed_len + num_tokens_from_messages(new_seed + '\n', deployment_name) > max_top_len:
                     break
                 else: 
                     seed_str += new_seed + '\n'

@@ -96,6 +96,7 @@ Step 1: Determine the emotions mentioned in the document.
 - Emotions should reflect a SINGLE emotion, not a combination.
 - New emotions should have a code, a simple general label, and an emotion description.
 - Emotions should be broad enough to accommodate future sub-emotions.
+- Please use only the emotions presented in the tree.
 Step 2: Perform ONE of the following:
 1. If there are already duplicates or relevant emotions in the hierarchy, output those emotions and stop here.
 2. If no emotion is contained in the document, return "None".
