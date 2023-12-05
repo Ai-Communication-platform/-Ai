@@ -49,7 +49,7 @@ firebase_admin.initialize_app(cred, {
 
 # 감정분석을 위한 프롬프트 읽어오기
 generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
-
+print(generation_prompt)
 
 def chatgpt_call(model, messages):
     # ChatGPT API 호출하기
