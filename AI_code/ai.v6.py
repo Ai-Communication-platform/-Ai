@@ -33,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -50,6 +50,7 @@ firebase_admin.initialize_app(cred, {
 # 감정분석을 위한 프롬프트 읽어오기
 generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
 print(generation_prompt)
+
 
 def chatgpt_call(model, messages):
     # ChatGPT API 호출하기
@@ -164,15 +165,23 @@ def job():
                 model = "gpt-3.5-turbo-1106"
                 print("model: ", model)
 
-                # 감정 분석하기
+                #==================#
+            #   |   감정 분석하기   |
+                #==================#
                 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
                 prompt = generation_prompt.format(Document=Message_text)
+                # 메시지 설정하기
+                messages = [
+                        {"role": "system", "content": "You are a helpful assistant."},
+                        {"role": "user", "content": prompt}
+                ]
                 start = time.time()
                 # 감정 분석 chatgpt로 진행
-                Sammary = chatgpt_call(model, prompt)['choices'][0]['message']['content']
+                Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
                 end = time.time()
                 print("감정 분석 결과: ", Sammary)
                 print(f"sentiment analysis Time: {end-start:.5f}sec")
+
 
 
                 # 질문 작성하기
