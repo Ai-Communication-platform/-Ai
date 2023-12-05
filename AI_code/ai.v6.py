@@ -169,8 +169,8 @@ def job():
                 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
                 prompt = generation_prompt.format(Document=Message_text)
                 # 감정 분석 chatgpt로 진행
-                response = chatgpt_call(model, prompt)['choices'][0]['message']['content']
-                
+                Sammary = chatgpt_call(model, prompt)['choices'][0]['message']['content']
+                print(Sammary)
 
 
                 # 질문 작성하기
