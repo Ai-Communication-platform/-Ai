@@ -179,9 +179,10 @@ def job():
                 # 감정 분석 chatgpt로 진행
                 Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
                 end = time.time()
-                print("감정 분석 결과: ", Sammary)
+                print("감정 분석 결과: ")
+                print(Sammary)
                 print(f"sentiment analysis Time: {end-start:.5f}sec")
-
+                #==================#
 
 
                 # 질문 작성하기
