@@ -51,6 +51,13 @@ firebase_admin.initialize_app(cred, {
 generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
 
 
+def chatgpt_call(model, messages):
+    # ChatGPT API 호출하기
+    response = openai.ChatCompletion.create(
+        model=model,
+        messages=messages
+    )
+
 def job():  
     global last_checked_time
     global path
@@ -158,8 +165,11 @@ def job():
 
                 # 감정 분석하기
                 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
-                Summary = generation_prompt.format(Document=Message_text)
-            
+                prompt = generation_prompt.format(Document=Message_text)
+                # 감정 분석 chatgpt로 진행
+                chatgpt_call(model, prompt)
+                
+
 
                 # 질문 작성하기
                 #query = "다음 문서를 요약해줘: " + Message_text
@@ -183,11 +193,8 @@ def job():
                 ]
 
                 # ChatGPT API 호출하기
-                response = openai.ChatCompletion.create(
-                    model=model,
-                    messages=messages
-                )
-                
+                chatgpt_call(model, messages)
+
                 answer = response['choices'][0]['message']['content']
                 print("ChatGPT: "+ answer.replace('.', '.\n').replace('? ', '?\n').replace('! ', '!\n'))
                 #끝
@@ -296,7 +303,29 @@ def job():
                 # 마지막으로 확인한 시간을 업데이트합니다.
                 # print("시간 :", last_checked_time)
                 last_checked_time = time.time()
-                
+
+# TopicGPT의 util.py의 api_call 함수 참고함.
+def api_call(prompt, deployment_name, temperature, max_tokens, top_p):
+    '''
+    API(OpenAI, Azure, Perplexity) 호출 및 응답 반환
+    - 프롬프트: 프롬프트 템플릿
+    - 배포 이름: 사용할 배포 이름(예: gpt-4, gpt-3.5-turbo 등)
+    - 온도: 온도 매개변수
+    - max_tokens: 최대 토큰 매개변수
+    - top_p: 상위 p 매개변수
+    '''
+    time.sleep(5)                           # Change to avoid rate limit
+    if deployment_name in ["gpt-35-turbo", "gpt-4", "gpt-3.5-turbo"]:
+        response = client.chat.completions.create(model=deployment_name, 
+        temperature=float(temperature),  
+        max_tokens=int(max_tokens),
+        top_p=float(top_p),
+        messages=[
+            {"role": "system", "content": ""},
+            {"role": "user", "content": prompt},
+            ])
+        return response.choices[0].message.content
+
 # 매 분마다 job 함수를 실행합니다.
 global_start = time.time()
 schedule.every(5).seconds.do(job)
