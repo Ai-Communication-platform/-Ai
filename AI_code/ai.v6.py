@@ -152,6 +152,12 @@ def job():
                 # 모델 - GPT 3.5 Turbo 선택
                 model = "gpt-3.5-turbo-1106"
                 print("model: ", model)
+
+                # 감정 분석하기
+                # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
+                generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
+                Summary = generation_prompt.format()
+
                 # 질문 작성하기
                 #query = "다음 문서를 요약해줘: " + Message_text
                 query =f"""
@@ -178,6 +184,7 @@ def job():
                     model=model,
                     messages=messages
                 )
+                
                 answer = response['choices'][0]['message']['content']
                 print("ChatGPT: "+ answer.replace('.', '.\n').replace('? ', '?\n').replace('! ', '!\n'))
                 #끝
