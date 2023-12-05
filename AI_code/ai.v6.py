@@ -33,7 +33,7 @@ path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
 credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 # Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
@@ -49,7 +49,7 @@ firebase_admin.initialize_app(cred, {
 
 # 감정분석을 위한 프롬프트 읽어오기
 generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
-print(generation_prompt)
+# print(generation_prompt)
 
 
 def chatgpt_call(model, messages):
@@ -197,7 +197,13 @@ def job():
                 Affirmation: Recognizing the true value of the other person. Example: “You are precious.”
                 Importance of Healing: The reason people want to be comforted is because when their hearts are warm, people move and move in the direction of healing.
 
-                Please refer to the above article. After that, answer the following passage simply and clearly, as if you were from the perspective of a friend of the same age. Only answers are output. Answer in Korean.                
+                A conversation method that fully understands the other person’s position:
+                
+                Please refer to the above article. After that, answer the following passage simply and clearly, as if you were from the perspective of a friend of the same age. Only answers are output. Answer in Korean.
+                
+                User's current feelings and situation:
+                "{Sammary}
+
                 "{Message_text}"
                 """
                 # 메시지 설정하기
