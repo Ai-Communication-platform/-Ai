@@ -66,6 +66,7 @@ print("model: ", model)
 #==================#
 #   감정 분석하기   |
 #==================#
+
 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
 prompt = generation_prompt.format(Document=Message_text)
 # 메시지 설정하기
