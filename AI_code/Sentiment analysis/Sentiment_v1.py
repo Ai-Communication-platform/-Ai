@@ -16,12 +16,8 @@ import openai
 import json
 import unicodedata
 import pandas as pd
-from google.cloud import speech
-from google.cloud import texttospeech
+import numpy as np
 from datetime import datetime, timedelta
-import pygame
-import firebase_admin
-from firebase_admin import credentials, initialize_app, storage
 import requests
 from moviepy.editor import AudioFileClip
 
@@ -31,54 +27,71 @@ def chatgpt_call(model, messages):
         model=model,
         messages=messages
     )
-
     return response
 
-# 서비스 계정 키(JSON 파일)의 경로
-cred = credentials.Certificate("C:\\Users\\win\\Documents\\ai-firebase-f501e-firebase-adminsdk-pgie0-832a8c2eb2.json")
-# 로컬에 저장할 디렉토리 지정 (예: '/your/local/directory/')
-path = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\input_audio'
-# Google Cloud 인증 키 파일 경로 (서비스 계정 키)
-credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
-
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
-# Google Cloud TTS 인증 키 파일 경로 (서비스 계정 키)
-tts_credentials_path = "C:\\Users\\win\\Documents\\ai-i-401313-176ecd5ad2cf.json"
+
 # 마지막으로 확인한 시간을 기록하는 전역 변수
 last_checked_time = time.time()
-
-# Firebase Admin SDK 초기화
-bucket_name = 'ai-firebase-f501e.appspot.com'
-firebase_admin.initialize_app(cred, {
-    'storageBucket': 'ai-firebase-f501e.appspot.com'
-})
 
 # 감정분석을 위한 프롬프트 읽어오기
 generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
 #print(generation_prompt)
 
 # 모델 - GPT 3.5 Turbo 선택
-model = "gpt-3.5-turbo-1106"
+model = "gpt-4"
 print("model: ", model)
 #==================#
 #   감정 분석하기   |
 #==================#
 
 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
-prompt = generation_prompt.format(Document=Message_text)
-# 메시지 설정하기
-messages = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": prompt}
-]
-start = time.time()
-# 감정 분석 chatgpt로 진행
-Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
-end = time.time()
-print("감정 분석 결과: ")
-print(Sammary)
-print(f"sentiment analysis Time: {end-start:.5f}sec")
+data = pd.read_csv('C:\\Users\\win\\Documents\\GitHub\\-Ai\\감성대화말뭉치(최종데이터)_Training.csv')
+test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분류', '감정_소분류']])
+data_size = 100
+pred = []
+# print(test_x)
+# print(test_y)
+# print(len(test_y))
+for size in range(10, 110, 10):
+    test_x, test_y = test_x[:size], test_y[:size]
+    for sample, label in zip(test_x, test_y): 
+        # print("sample: ", sample)
+        # print("label: ", label)
+        prompt = generation_prompt.format(Document=sample)
+        # 메시지 설정하기
+        messages = [
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+        ]
+        start = time.time()
+        # 감정 분석 chatgpt로 진행
+        Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
+        end = time.time()
+        print("감정 분석 결과: ")
+        element = list(Sammary.split(' '))
+        print(element)
+        pred.append([element[2], element[5]])
+        print(f"sentiment analysis Time: {end-start:.5f}sec")
+        time.sleep(20)
+print("감정 예측 결과: ")
+print(pred)
 #==================#
+
+error = 0
+acc = 0
+for predict, target in zip(pred, label):
+    if predict != target:
+        # 하나만 맞는 경우에는 error 0.5점
+        if predict[0] == target[0] or predict[1] == target[1]:
+            error += 0.5
+        # 다 틀렸으면 error 1점
+        else:
+            error += 1
+
+acc = (data_size - error)/data_size
+
+print("accuracy: ", acc)
