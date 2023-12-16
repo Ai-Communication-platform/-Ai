@@ -30,7 +30,7 @@ def chatgpt_call(model, messages):
     return response
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
@@ -38,7 +38,7 @@ openai.api_key = os.environ["OPENAI_API_KEY"]
 last_checked_time = time.time()
 
 # 감정분석을 위한 프롬프트 읽어오기
-generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\test_prompt1.txt', "r", encoding='utf-8').read()
+generation_prompt = open('C:\\Users\\win\\Documents\\GitHub\\-Ai\\prompt\\generation_Ai.txt', "r", encoding='utf-8').read()
 #print(generation_prompt)
 
 # 모델 - GPT 3.5 Turbo 선택
@@ -53,8 +53,9 @@ data = pd.read_csv('C:\\Users\\win\\Documents\\GitHub\\-Ai\\감성대화말뭉�
 test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분류', '감정_소분류']])
 
 output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\data\\sentence'
-epoch = 10
-batch_size = 100
+completion_file = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\output\\competion"
+epoch = 100
+batch_size = 50
 for i in range(epoch):
     mini_batch = test_x[i*batch_size:(i+1)*batch_size]
     with open(output_file+str(i)+".txt", 'w', encoding='utf-8') as file:
@@ -62,10 +63,11 @@ for i in range(epoch):
             line = f"{j+1}: {value}\n"
             file.write(line)
 
-output_dir = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\data"
+output_dir = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\data\\"
 
 # 디렉토리에서 txt 파일 이름들만 가져옵니다.
 txt_files = [f for f in os.listdir(output_dir) if f.endswith(".txt")]
+print(txt_files)
 
 
 data_size = 100
@@ -73,43 +75,50 @@ pred = []
 # print(test_x)
 # print(test_y)
 # print(len(test_y))
-for size in range(0, 1000, 100):
-    test_x, test_y = test_x[:size], test_y[:size]
+for size in range(0, 1000, 50):
+    # test_x, test_y = test_x[:size], test_y[:size]
     for smaple in txt_files: 
         # print("sample: ", sample)
         # print("label: ", label)
-        prompt = generation_prompt.format(Document=smaple)
-        # 메시지 설정하기
-        messages = [
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt}
-        ]
-        start = time.time()
-        # 감정 분석 chatgpt로 진행
-        Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
-        end = time.time()
-        print("감정 분석 결과: ")
-        # element = list(Sammary.split(' '))
-        # print(element)
-        # pred.append([element[2], element[5]])
-        print(Sammary)
-        print(f"sentiment analysis Time: {end-start:.5f}sec")
-        time.sleep(20)
+        with open(os.path.join(output_dir, smaple), 'r', encoding='utf-8') as file:
+            text = file.read()
+            # print(text)
+            prompt = generation_prompt.format(Sentence=text)
+            # 메시지 설정하기
+            messages = [
+                    {"role": "system", "content": "You are a helpful assistant."},
+                    {"role": "user", "content": prompt}
+            ]
+            start = time.time()
+            # 감정 분석 chatgpt로 진행
+            Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
+            end = time.time()
+            print("감정 분석 결과: ")
+            # element = list(Sammary.split(' '))
+            # print(element)
+            # pred.append([element[2], element[5]])
+            with open(completion_file+str(size)+".txt", 'w', encoding='utf-8') as file:
+                for j, value in enumerate(Sammary):
+                    line = f"{j+1}: {value}\n"
+                    file.write(line)
+                print("쓰기 끝")
+            print(f"sentiment analysis Time: {end-start:.5f}sec")
+            time.sleep(1)
 # print("감정 예측 결과: ")
 # print(pred)
 #==================#
 
-error = 0
-acc = 0
-for predict, target in zip(pred, label):
-    if predict != target:
-        # 하나만 맞는 경우에는 error 0.5점
-        if predict[0] == target[0] or predict[1] == target[1]:
-            error += 0.5
-        # 다 틀렸으면 error 1점
-        else:
-            error += 1
+# error = 0
+# acc = 0
+# for predict, target in zip(pred, label):
+#     if predict != target:
+#         # 하나만 맞는 경우에는 error 0.5점
+#         if predict[0] == target[0] or predict[1] == target[1]:
+#             error += 0.5
+#         # 다 틀렸으면 error 1점
+#         else:
+#             error += 1
 
-acc = (data_size - error)/data_size
+# acc = (data_size - error)/data_size
 
-print("accuracy: ", acc)
+# print("accuracy: ", acc)
