@@ -51,8 +51,10 @@ print("model: ", model)
 # 사용자의 현재 감정 상태와 상황이 요약되어 Message에 합쳐짐.
 data = pd.read_csv('C:\\Users\\win\\Documents\\GitHub\\-Ai\\감성대화말뭉치(최종데이터)_Training.csv')
 test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분류', '감정_소분류']])
+
 output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\sentence.txt'
 with open(output_file, 'w', encoding='utf-8') as file:
+    print("길이: ". len(enumerate(test_x)))
     for i, value in enumerate(test_x):
         line = f"{i+1}: {value}\n"
         file.write(line)
