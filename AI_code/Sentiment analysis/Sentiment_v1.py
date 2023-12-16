@@ -53,7 +53,7 @@ data = pd.read_csv('C:\\Users\\win\\Documents\\GitHub\\-Ai\\감성대화말뭉�
 test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분류', '감정_소분류']])
 
 output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\data\\sentence'
-epoch = 100
+epoch = 200
 batch_size = int(len(test_x)/epoch)
 for i in range(epoch):
     mini_batch = test_x[i*batch_size:(i+1)*batch_size]
