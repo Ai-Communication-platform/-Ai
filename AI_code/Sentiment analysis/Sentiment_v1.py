@@ -52,7 +52,7 @@ print("model: ", model)
 data = pd.read_csv('C:\\Users\\win\\Documents\\GitHub\\-Ai\\감성대화말뭉치(최종데이터)_Training.csv')
 test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분류', '감정_소분류']])
 
-output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\sentence'
+output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\data\\sentence'
 epoch = 30
 batch_size = int(len(test_x)/epoch)
 for i in range(epoch):
