@@ -30,7 +30,7 @@ def chatgpt_call(model, messages):
     return response
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
@@ -54,8 +54,8 @@ test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분�
 
 output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\data\\sentence'
 completion_file = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\output\\competion"
-epoch = 100
-batch_size = 50
+epoch = 40
+batch_size = 25
 for i in range(epoch):
     mini_batch = test_x[i*batch_size:(i+1)*batch_size]
     with open(output_file+str(i)+".txt", 'w', encoding='utf-8') as file:
@@ -75,7 +75,7 @@ pred = []
 # print(test_x)
 # print(test_y)
 # print(len(test_y))
-for size in range(0, 1000, 50):
+for size in range(0, 1000, 25):
     # test_x, test_y = test_x[:size], test_y[:size]
     for smaple in txt_files: 
         # print("sample: ", sample)
@@ -84,6 +84,7 @@ for size in range(0, 1000, 50):
             text = file.read()
             # print(text)
             prompt = generation_prompt.format(Sentence=text)
+            print(prompt)
             # 메시지 설정하기
             messages = [
                     {"role": "system", "content": "You are a helpful assistant."},
@@ -94,12 +95,13 @@ for size in range(0, 1000, 50):
             Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
             end = time.time()
             print("감정 분석 결과: ")
+            print(Sammary)
             # element = list(Sammary.split(' '))
             # print(element)
             # pred.append([element[2], element[5]])
             with open(completion_file+str(size)+".txt", 'w', encoding='utf-8') as file:
-                for j, value in enumerate(Sammary):
-                    line = f"{j+1}: {value}\n"
+                for value in Sammary.split('\n'):
+                    line = f"{value}\n"
                     file.write(line)
                 print("쓰기 끝")
             print(f"sentiment analysis Time: {end-start:.5f}sec")
