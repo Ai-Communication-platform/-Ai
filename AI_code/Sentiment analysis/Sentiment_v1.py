@@ -30,7 +30,6 @@ def chatgpt_call(model, messages):
     return response
 
 # ChatGPT API Key Load
-os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
@@ -54,8 +53,8 @@ test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분�
 
 output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\data\\sentence'
 completion_file = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\output\\competion"
-epoch = 40
-batch_size = 25
+epoch = 10
+batch_size = 100
 for i in range(epoch):
     mini_batch = test_x[i*batch_size:(i+1)*batch_size]
     with open(output_file+str(i)+".txt", 'w', encoding='utf-8') as file:
@@ -75,16 +74,49 @@ pred = []
 # print(test_x)
 # print(test_y)
 # print(len(test_y))
-for size in range(0, 1000, 25):
+# for size in range(0, 1000, 100):
     # test_x, test_y = test_x[:size], test_y[:size]
-    for smaple in txt_files: 
+    # for smaple in txt_files: 
+    #     # print("sample: ", sample)
+    #     # print("label: ", label)
+    #     with open(os.path.join(output_dir, smaple), 'r', encoding='utf-8') as file:
+    #         text = file.read()
+    #         # print(text)
+    #         prompt = generation_prompt.format(Sentence=text)
+    #         # print(prompt)
+    #         # 메시지 설정하기
+    #         messages = [
+    #                 {"role": "system", "content": "You are a helpful assistant."},
+    #                 {"role": "user", "content": prompt}
+    #         ]
+    #         start = time.time()
+    #         # 감정 분석 chatgpt로 진행
+    #         Sammary = chatgpt_call(model, messages)['choices'][0]['message']['content']
+    #         end = time.time()
+    #         print("감정 분석 결과: ")
+    #         print(Sammary)
+    #         # element = list(Sammary.split(' '))
+    #         # print(element)
+    #         # pred.append([element[2], element[5]])
+    #         with open(completion_file+str(size)+".txt", 'w', encoding='utf-8') as file:
+    #             for value in Sammary.split('\n'):
+    #                 line = f"{value}\n"
+    #                 file.write(line)
+    #             print("쓰기 끝")
+    #         print(f"sentiment analysis Time: {end-start:.5f}sec")
+    #         time.sleep(1)
+# print("감정 예측 결과: ")
+# print(pred)
+#==================#
+count = 1
+for smaple in txt_files: 
         # print("sample: ", sample)
         # print("label: ", label)
         with open(os.path.join(output_dir, smaple), 'r', encoding='utf-8') as file:
             text = file.read()
             # print(text)
             prompt = generation_prompt.format(Sentence=text)
-            print(prompt)
+            # print(prompt)
             # 메시지 설정하기
             messages = [
                     {"role": "system", "content": "You are a helpful assistant."},
@@ -99,17 +131,14 @@ for size in range(0, 1000, 25):
             # element = list(Sammary.split(' '))
             # print(element)
             # pred.append([element[2], element[5]])
-            with open(completion_file+str(size)+".txt", 'w', encoding='utf-8') as file:
+            with open(completion_file+str(count)+".txt", 'w', encoding='utf-8') as file:
                 for value in Sammary.split('\n'):
                     line = f"{value}\n"
                     file.write(line)
                 print("쓰기 끝")
             print(f"sentiment analysis Time: {end-start:.5f}sec")
+            count += 1
             time.sleep(1)
-# print("감정 예측 결과: ")
-# print(pred)
-#==================#
-
 # error = 0
 # acc = 0
 # for predict, target in zip(pred, label):
