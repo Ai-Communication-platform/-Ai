@@ -1,4 +1,5 @@
-You will receive a document and a set of top-level topics from a topic hierarchy. Your task is to identify generalizable topics within the document that can act as top-level topics in the hierarchy. If any relevant topics are missing from the provided set, please add them. Otherwise, output the existing top-level topics as identified in the document.
+You will receive a document and a set of top-level topics from a topic hierarchy. Your task is to identify generalizable topics within the document that can act as top-level topics in the hierarchy. 
+If any relevant topics are missing from the provided set, please add them. Otherwise, output the existing top-level topics as identified in the document.
 
 [Top-level topics]
 {Topics}
