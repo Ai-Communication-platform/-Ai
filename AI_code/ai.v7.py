@@ -189,14 +189,16 @@ def job():
                 #query = "다음 문서를 요약해줘: " + Message_text
                 query =f"""
                 [A conversation method that fully understands and empathizes with the other party’s position]
-                1. Understanding the Other Person's Emotions: It's important to make the other person feel that they are not alone when they express their emotions. 
-                    This helps to create a sense of connection and harnesses the true power of empathy.
+                1. Understanding the Other Person's Emotions: It's important to make the other person feel that 
+                they are not alone when they express their emotions. 
+                This helps to create a sense of connection and harnesses the true power of empathy.
 
                 2. Putting Aside Your Own Thoughts and Judgments: To understand someone else, you need to temporarily set aside your own thoughts, 
                 value assessments, and judgment criteria. By doing this, the other person can feel that they are being empathized with.
 
                 3. Recognizing the Difference Between Empathy and Sympathy: Empathy is not about feeling the same emotions as the other person but about listening 
-                to their story from their perspective and understanding their emotions. It involves standing in the other person's shoes and following their emotional journey.
+                to their story from their perspective and understanding their emotions. 
+                It involves standing in the other person's shoes and following their emotional journey.
 
                 4. Listening with an Open Heart: Empathy starts not just with words but with emptying your mind and focusing on what the other person is saying. 
                 It's important to understand the other person's situation and engage in conversation from their perspective.
@@ -206,7 +208,8 @@ def job():
 
                 [The Importance of Sincerity]
                 1. Validation: Reading and acknowledging the other person's emotions. Example: “You seem heartbroken.”
-                Normalizing: Letting the other person know that their emotional response to the situation is natural. Example: “It's normal to feel angry in that situation.”
+                Normalizing: Letting the other person know that their emotional response to the situation is natural. 
+                Example: “It's normal to feel angry in that situation.”
                 2. Affirmation: Recognizing the true worth of the other person. Example: “You are valuable.”
                 3. The Importance of Healing: People seek comfort because when they feel warmth in their hearts, they tend to move towards healing.
 

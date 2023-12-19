@@ -30,6 +30,7 @@ def chatgpt_call(model, messages):
     return response
 
 # ChatGPT API Key Load
+os.environ["OPENAI_API_KEY"] = "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"
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
@@ -53,8 +54,10 @@ test_x, test_y = np.array(data['사람문장1']), np.array(data[['감정_대분�
 
 output_file = 'C:\\Users\\win\\Documents\\GitHub\\-Ai\\data\\sentence'
 completion_file = "C:\\Users\\win\\Documents\\GitHub\\-Ai\\output\\competion.txt"
-epoch = 10
-batch_size = 100
+epoch = 2
+batch_size = 50
+data_size = 100
+
 for i in range(epoch):
     mini_batch = test_x[i*batch_size:(i+1)*batch_size]
     with open(output_file+str(i)+".txt", 'w', encoding='utf-8') as file:
@@ -69,7 +72,6 @@ txt_files = [f for f in os.listdir(output_dir) if f.endswith(".txt")]
 print(txt_files)
 
 
-data_size = 100
 
 # print(test_x)
 # print(test_y)
@@ -108,8 +110,7 @@ data_size = 100
 # print("감정 예측 결과: ")
 # print(pred)
 #==================#
-count = 1
-pred = []
+pred = np.array([])
 for smaple in txt_files: 
         # print("sample: ", sample)
         # print("label: ", label)
@@ -129,30 +130,34 @@ for smaple in txt_files:
             end = time.time()
             print("감정 분석 결과: ")
             print(Sammary)
-            element = list(Sammary.split(' '))
-            print(element)
-            pred.append([element[3], element[6]])
+            element = list(Sammary.split('\n'))
+            for val in element: 
+                val_list = val.split(' ')
+                print(val_list)
+                pred = np.append(pred, np.array([[val_list[3], val_list[6]]]))
             with open(completion_file, 'a', encoding='utf-8') as file:
                 for value in Sammary.split('\n'):
                     line = f"{value}\n"
                     file.write(line)
                 print("쓰기 끝")
             print(f"sentiment analysis Time: {end-start:.5f}sec")
-            count += 1
             time.sleep(1)
 print(pred)
+pre = pred.reshape(100,2)
+print('pre')
+print(pre)
 
 error = 0
 acc = 0
-label = test_y[:1000]
-
+label = test_y[:100]
+print('label')
 print(label)
 
 print(len(pred), len(label))
 for predict, target in zip(pred, label):
-    if predict != target:
+    if not (predict != target).all():
         # 하나만 맞는 경우에는 error 0.5점
-        if predict[0] == target[0] or predict[1] == target[1]:
+        if (predict != target).any():
             error += 0.5
         # 다 틀렸으면 error 1점
         else:
