@@ -2,7 +2,7 @@
 ---
 ## 00. Intro & Explanation
 - This repository is for Voice Recognition & Synthesis and TopicGPT apply etc <br>
-- For information on what each directory does, please refer to the link below and then use that directory.
+- For information on what each directory does, please refer to the link below and then use that directory. <br>
   → Link: https://github.com/Ai-Communication-platform [Check 04.]
 ---
 <br>
