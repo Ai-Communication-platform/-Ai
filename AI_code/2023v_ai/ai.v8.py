@@ -44,7 +44,7 @@ last_checked_time = time.time()
 # Firebase Admin SDK 초기화
 bucket_name = 'your backet'
 firebase_admin.initialize_app(cred, {
-    'storageBucket': 'your storageBucket's
+    'storageBucket': 'your storageBucket'
 })
 
 # 감정분석을 위한 프롬프트 읽어오기
